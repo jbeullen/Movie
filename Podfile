@@ -6,6 +6,7 @@ target 'MovieBrowser' do
   use_frameworks!
 
   # Pods for MovieBrowser
+  pod 'AWSAppSync', '~> 2.6.17'
 
   target 'MovieBrowserTests' do
     inherit! :search_paths
