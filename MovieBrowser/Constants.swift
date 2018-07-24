@@ -12,15 +12,14 @@ import Foundation
 import AWSCore
 import AWSAppSync
 
-// EVENTS APP CONFIGURATION
-
+// AppSync CONFIGURATION
 // The API Key for authorization
 let StaticAPIKey = "<YOUR API KEY>"
-
 // The Endpoint URL for AppSync
 let AppSyncEndpointURL: URL = URL(string: "<APPSYNC ENDPOINT>")!
-
+// AWS Region of your AppSync API
 let AppSyncRegion: AWSRegionType = .EUWest1
+// SQLite Database name
 let database_name = "movie-app-db"
 
 
