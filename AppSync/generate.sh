@@ -1,0 +1,1 @@
+aws-appsync-codegen generate queries.graphql --schema schema.json --output ../MovieBrowser/API.swift
