@@ -7,11 +7,10 @@
 //
 
 import UIKit
-import AWSAppSync
 
 class CategoryListController: UIViewController {
     // MARK: - Variables
-    var appSyncClient: AWSAppSyncClient?
+    var dataLayer: DataLayer?
     
     lazy var refresher: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
@@ -21,7 +20,7 @@ class CategoryListController: UIViewController {
         return refreshControl
     }()
 
-    var categoryList: [ListCategoriesQuery.Data.ListCategory.Item?] = [] {
+    var categoryList: [MovieCategory] = [] {
         didSet {
             tableView.reloadData()
         }
@@ -40,42 +39,37 @@ class CategoryListController: UIViewController {
         super.viewDidLoad()
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        appSyncClient = appDelegate.appSyncClient
+        dataLayer = appDelegate.dataLayer
         
         loadAllCategories()
         
         tableView.refreshControl = refresher
     }
-    
-    
-
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
 
-    
-    
     // MARK: - Data Fetching
     func loadAllCategories() {
-        loadCategoriesFromAppSync(cachePolicy: .returnCacheDataAndFetch)
+        loadCategoriesFromDataLayer(dataRetrieval: .fromServer)
     }
     
     func loadAllCategoriesFromCache() {
-        loadCategoriesFromAppSync(cachePolicy: .returnCacheDataDontFetch)
+        loadCategoriesFromDataLayer(dataRetrieval: .fromCache)
     }
     
-    func loadCategoriesFromAppSync(cachePolicy: CachePolicy){
-        if let appSyncClient = self.appSyncClient{
-            appSyncClient.fetch(query: ListCategoriesQuery(), cachePolicy: cachePolicy)  { (result, error) in
+    private func loadCategoriesFromDataLayer(dataRetrieval: DataRetrieval){
+        if let dataLayer = self.dataLayer{
+            dataLayer.listMovieCategories(dataRetrieval: dataRetrieval) { (result, error) in
                 if let error = error {
                     print(error.localizedDescription)
                     return
                 }
                 
-                if let items  =  result?.data?.listCategories?.items {
-                    self.categoryList = items
+                if let result  =  result {
+                    self.categoryList = result
                 }
             }
         }
@@ -86,6 +80,17 @@ class CategoryListController: UIViewController {
         loadAllCategories()
         refreshControl.endRefreshing()
     }
+
+   // MARK: - Navigation
+   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+       if segue.identifier == "ShowCategory",
+            let destination = segue.destination as? CategoryOverviewController,
+            let rowIndex = tableView.indexPathForSelectedRow?.row
+       {
+            destination.category = self.categoryList[rowIndex]
+       }
+   }
+
 }
 
 // MARK: - UITableViewDataSource
@@ -99,8 +104,8 @@ extension CategoryListController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         
-        if let title = categoryList[indexPath.row]?.title, let textLabel = cell.textLabel{
-            textLabel.text = title
+        if let textLabel = cell.textLabel{
+            textLabel.text = categoryList[indexPath.row].title
         }
         return cell
     }

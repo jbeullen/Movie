@@ -38,11 +38,14 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="D3f-qE-eQP" kind="show" identifier="ShowCategory" id="faQ-0q-yIE"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="mV7-dX-p4C" id="BzJ-3d-XHd"/>
-                                    <outlet property="delegate" destination="mV7-dX-p4C" id="rlr-LB-Dj5"/>
+                                    <outlet property="delegate" destination="mV7-dX-p4C" id="oxW-jy-qtU"/>
                                 </connections>
                             </tableView>
                         </subviews>
@@ -63,6 +66,22 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EXt-z0-RlP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="624.79999999999995" y="-672.41379310344837"/>
+        </scene>
+        <!--Category Overview Controller-->
+        <scene sceneID="jMI-zx-bzg">
+            <objects>
+                <viewController storyboardIdentifier="CategoryOverview" id="D3f-qE-eQP" customClass="CategoryOverviewController" customModule="MovieBrowser" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Rej-ca-yxl">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <viewLayoutGuide key="safeArea" id="o5N-Ay-yoT"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="30C-9t-yHV"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="h7s-za-DKA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1638" y="-672"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="lcE-cx-SPY">
