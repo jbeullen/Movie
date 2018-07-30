@@ -112,7 +112,7 @@ class AppSyncDataLayer: DataLayer {
                 }
                 
                 if let items  =  result?.data?.listCategories?.items {
-                    let categories = items.map{ MovieCategory(id: $0!.id, title: $0!.title) }
+                    let categories = items.map{ MovieCategory(id: $0!.id, title: $0!.title) }.sorted{ $0.title < $1.title }
                     completion(categories, nil)
                 }
             }
@@ -130,7 +130,7 @@ class AppSyncDataLayer: DataLayer {
                 }
 
                 if let items  =  result?.data?.listMovies?.items {
-                    let movies = items.map{ MovieResult(id: $0!.id, title: $0!.title) }
+                    let movies = items.map{ MovieResult(id: $0!.id, title: $0!.title) }.sorted { $0.title < $1.title }
                     completion(movies, nil)
                 }
             }
