@@ -65,6 +65,8 @@ yarn-error.log
 # Visual Code
 .vscode/
 
-# Project Stuff
+# App Code
+.idea/
+
+# Generated Files
 MovieBrowser/API.swift
-MovieBrowser/Constants.swift
