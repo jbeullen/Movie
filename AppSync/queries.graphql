@@ -7,7 +7,27 @@ query ListCategories($limit: Int, $nextToken: String) {
    }
 }
 
+query ListMoviesInCategory ($limit: Int, $nextToken: String, $categoryId: String){
+  	listMovies(
+            limit: $limit, 
+            nextToken: $nextToken, 
+            filter: {
+                  categories: {contains: $categoryId}
+            }
+      ){
+    	items{
+        ...Movie
+      }
+    	nextToken
+  }
+}
+
 fragment Category on Category {
+      id
+      title
+}
+
+fragment Movie on Movie {
       id
       title
 }
